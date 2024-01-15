@@ -1,4 +1,4 @@
--- Active: 1704313424689@@127.0.0.1@5432@pedido
+-- Active: 1705323844254@@127.0.0.1@5432@pedido
 CREATE TABLE cliente (
     idcliente INTEGER NOT NULL,
     nome VARCHAR(50) NOT NULL,
