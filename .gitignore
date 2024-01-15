@@ -9,6 +9,11 @@
 *ib_logfile1
 *ibdata1
 
+# Python
+venv
+teste.py
+__pycache__
+
 *.cmake
 !/cmake/*.cmake
 *CMakeFiles/
