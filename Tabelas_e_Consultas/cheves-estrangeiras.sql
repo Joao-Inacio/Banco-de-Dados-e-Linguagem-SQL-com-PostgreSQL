@@ -56,3 +56,20 @@ UPDATE cliente SET idbairro = 1 WHERE idcliente IN (1, 12, 13);
 UPDATE cliente SET idbairro = 2 WHERE idcliente IN (2, 3, 6, 8, 9);
 UPDATE cliente SET idbairro = 3 WHERE idcliente IN (4, 5);
 UPDATE cliente SET idbairro = 4 WHERE idcliente = 7;
+
+ALTER TABLE cliente DROP municipio;
+ALTER TABLE cliente DROP uf;
+ALTER TABLE cliente ADD idmunicipio INTEGER;
+ALTER TABLE cliente ADD CONSTRAINT fk_cliente_idmunicipio FOREIGN KEY (idmunicipio) REFERENCES municipio (idmunicipio);
+
+SELECT * FROM cliente;
+
+UPDATE cliente SET idmunicipio = 1 WHERE idcliente IN (1, 2, 10, 11);
+UPDATE cliente SET idmunicipio = 2 WHERE idcliente IN (3, 12);
+UPDATE cliente SET idmunicipio = 3 WHERE idcliente = 4;
+UPDATE cliente SET idmunicipio = 4 WHERE idcliente = 5;
+UPDATE cliente SET idmunicipio = 5 WHERE idcliente IN (6, 13);
+UPDATE cliente SET idmunicipio = 6 WHERE idcliente = 7;
+UPDATE cliente SET idmunicipio = 7 WHERE idcliente = 8;
+UPDATE cliente SET idmunicipio = 8 WHERE idcliente = 9;
+UPDATE cliente SET idmunicipio = 9 WHERE idcliente IN (14, 15);
