@@ -1,4 +1,4 @@
--- Active: 1705323844254@@127.0.0.1@5432@pedido
+-- Active: 1710766883456@@127.0.0.1@5432@pedido
 SELECT * FROM cliente;
 
 UPDATE cliente SET nome = 'Lucas' WHERE idcliente = 1;
