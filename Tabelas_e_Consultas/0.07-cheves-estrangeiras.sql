@@ -34,6 +34,8 @@ UPDATE cliente SET idnacionalidade = 2 WHERE idcliente IN (5, 7);
 UPDATE cliente SET idnacionalidade = 3 WHERE idcliente = 8;
 UPDATE cliente SET idnacionalidade = 4 WHERE idcliente IN (9, 13);
 
+SELECT * FROM cliente;
+
 ALTER TABLE cliente DROP complemento;
 
 ALTER TABLE cliente ADD idcomplemento INTEGER;
@@ -58,6 +60,8 @@ UPDATE cliente SET idbairro = 1 WHERE idcliente IN (1, 12, 13);
 UPDATE cliente SET idbairro = 2 WHERE idcliente IN (2, 3, 6, 8, 9);
 UPDATE cliente SET idbairro = 3 WHERE idcliente IN (4, 5);
 UPDATE cliente SET idbairro = 4 WHERE idcliente = 7;
+
+SELECT * FROM cliente;
 
 ALTER TABLE cliente DROP municipio;
 ALTER TABLE cliente DROP uf;
