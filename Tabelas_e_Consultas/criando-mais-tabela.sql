@@ -1,4 +1,4 @@
--- Active: 1710766883456@@127.0.0.1@5432@pedido
+-- Active: 1705323844254@@127.0.0.1@5432@pedido
 CREATE TABLE profissao (
     idprofissao INTEGER NOT NULL,
     nome VARCHAR(30) NOT NULL,
@@ -51,8 +51,6 @@ INSERT INTO bairro (idbairro, nome) VALUES (1, 'Cidade Nova');
 INSERT INTO bairro (idbairro, nome) VALUES (2, 'Centro');
 INSERT INTO bairro (idbairro, nome) VALUES (3, 'São Pedro');
 INSERT INTO bairro (idbairro, nome) VALUES (4, 'Santa Rosa');
-
-SELECT * FROM bairro;
 
 CREATE TABLE uf (
     iduf INTEGER NOT NULL,
