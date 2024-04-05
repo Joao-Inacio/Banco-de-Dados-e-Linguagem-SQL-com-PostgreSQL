@@ -63,6 +63,45 @@ UPDATE cliente SET idbairro = 4 WHERE idcliente = 7;
 
 SELECT * FROM cliente;
 
+CREATE TABLE uf (
+    iduf INTEGER NOT NULL,
+    nome VARCHAR(30) NOT NULL,
+    sigla CHAR(2) NOT NULL,
+    CONSTRAINT pk_ufd_idunidade_federecao PRIMARY KEY (iduf),
+    CONSTRAINT un_ufd_nome UNIQUE (nome),
+    CONSTRAINT un_ufd_sigla UNIQUE (sigla)
+);
+
+INSERT INTO uf (iduf, nome, sigla) VALUES (1, 'Santa Catarina', 'SC');
+INSERT INTO uf (iduf, nome, sigla) VALUES (2, 'Paranaá', 'PR');
+INSERT INTO uf (iduf, nome, sigla) VALUES (3, 'São Paulo', 'SP');
+INSERT INTO uf (iduf, nome, sigla) VALUES (4, 'Minas Gerais', 'MG');
+INSERT INTO uf (iduf, nome, sigla) VALUES (5, 'Rio Grande do Sul', 'RS');
+INSERT INTO uf (iduf, nome, sigla) VALUES (6, 'Rio de Janeiro', 'RJ');
+
+SELECT * FROM uf;
+
+CREATE TABLE municipio (
+    idmunicipio INTEGER NOT NULL,
+    nome VARCHAR(30) NOT NULL,
+    iduf INTEGER NOT NULL,
+    CONSTRAINT pk_mnc_idmunicipio PRIMARY KEY (idmunicipio),
+    CONSTRAINT un_mnc_nome UNIQUE (nome),
+    CONSTRAINT fk_mnc_iduf FOREIGN KEY (iduf) REFERENCES uf (iduf)
+);
+
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (1, 'Porto União', 1);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (2, 'Canoinhas', 1);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (3, 'Porto Vitória', 2);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (4, 'General Carneiro', 2);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (5, 'São Paulo', 3);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (6, 'Rio de Janeiro', 6);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (7, 'Uberlândia', 4);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (8, 'Porto Alegre', 5);
+INSERT INTO municipio (idmunicipio, nome, iduf) VALUES (9, 'União da Vitoria', 2);
+
+SELECT * FROM municipio;
+
 ALTER TABLE cliente DROP municipio;
 ALTER TABLE cliente DROP uf;
 ALTER TABLE cliente ADD idmunicipio INTEGER;
@@ -79,3 +118,5 @@ UPDATE cliente SET idmunicipio = 6 WHERE idcliente = 7;
 UPDATE cliente SET idmunicipio = 7 WHERE idcliente = 8;
 UPDATE cliente SET idmunicipio = 8 WHERE idcliente = 9;
 UPDATE cliente SET idmunicipio = 9 WHERE idcliente IN (14, 15);
+
+SELECT * FROM cliente;
