@@ -1,8 +1,9 @@
--- Active: 1710766883456@@127.0.0.1@5432@pedido
+-- Active: 1714153732924@@127.0.0.1@5432@pedido
 
 -- 1. A média dos valores de vendas dos vendedores que venderam mais que R$ 200,00.
 SELECT * FROM pedido;
 SELECT ROUND(AVG(valor)::NUMERIC, 2) as Media_valor FROM pedido WHERE valor > 200;
+
 -- 2. Os vendedores que venderam mais que R$ 1500,00.
 SELECT COUNT(idpedido) as Vendedor FROM pedido WHERE valor > 1500
 
@@ -10,18 +11,25 @@ SELECT COUNT(idpedido) as Vendedor FROM pedido WHERE valor > 1500
 SELECT idvendedor, SUM(valor) FROM pedido GROUP BY idvendedor ORDER BY idvendedor;
 
 -- 4. A quantidade de municípios.
+SELECT COUNT(idmunicipio) FROM municipio;
 
 -- 5. A quantidade de municípios que são do Paraná ou de Santa Catarina.
+SELECT COUNT(idmunicipio) FROM municipio WHERE iduf IN (5,6)
 
 -- 6. A quantidade de municípios por estado.
+SELECT iduf, COUNT(idmunicipio) FROM municipio GROUP BY iduf;
 
 -- 7. A quantidade de clientes que informaram o logradouro.
+SELECT COUNT(idcliente) FROM cliente WHERE logradouro IS NOT NULL;
 
 -- 8. A quantidade de clientes por município.
+SELECT idmunicipio, COUNT(idcliente) FROM cliente GROUP BY idmunicipio ORDER BY idmunicipio;
 
 -- 9. A quantidade de fornecedores.
+SELECT COUNT(idfornecedor) FROM fornecedor;
 
 -- 10. A quantidade de produtos por fornecedor.
+SELECT idfornecedor, COUNT(idproduto) FROM produto GROUP BY idfornecedor;
 
 -- 11. A média de preços dos produtos do fornecedor Cap. Computadores.
 
