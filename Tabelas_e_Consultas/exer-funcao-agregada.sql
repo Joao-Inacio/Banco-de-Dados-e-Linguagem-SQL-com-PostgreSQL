@@ -1,4 +1,4 @@
--- Active: 1714153732924@@127.0.0.1@5432@pedido
+-- Active: 1714994625333@@127.0.0.1@5432@pedido
 
 -- 1. A média dos valores de vendas dos vendedores que venderam mais que R$ 200,00.
 SELECT * FROM pedido;
@@ -32,16 +32,22 @@ SELECT COUNT(idfornecedor) FROM fornecedor;
 SELECT idfornecedor, COUNT(idproduto) FROM produto GROUP BY idfornecedor;
 
 -- 11. A média de preços dos produtos do fornecedor Cap. Computadores.
+SELECT idfornecedor, AVG(valor) FROM produto WHERE idfornecedor = 2 GROUP BY idfornecedor;
 
 -- 12. O somatório dos preços de todos os produtos.
+SELECT SUM(valor) FROM produto;
 
 -- 13. O nome do produto e o preço somente do produto mais caro.
+SELECT nome, valor FROM produto ORDER BY valor DESC LIMIT 1;
 
 -- 14. O nome do produto e o preço somente do produto mais barato.
+SELECT nome, valor FROM produto ORDER BY valor ASC LIMIT 1;
 
 -- 15. A média de preço de todos os produtos.
+SELECT AVG(valor) FROM produto;
 
 -- 16. A quantidade de transportadoras.
+SELECT COUNT(idtransportadora) FROM transportadora;
 
 -- 17. A média do valor de todos os pedidos.
 
