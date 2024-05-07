@@ -4,8 +4,14 @@
 SELECT * FROM pedido;
 SELECT ROUND(AVG(valor)::NUMERIC, 2) as Media_valor FROM pedido WHERE valor > 200;
 
+-- Resolução do Professor
+SELECT idvendedor, AVG(valor) FROM pedido GROUP BY idvendedor HAVING AVG(valor) > 200;
+
 -- 2. Os vendedores que venderam mais que R$ 1500,00.
-SELECT COUNT(idpedido) as Vendedor FROM pedido WHERE valor > 1500
+SELECT COUNT(idpedido) as Vendedor FROM pedido WHERE valor > 1500;
+
+-- Resolução do Professor
+SELECT idvendedor, SUM(valor) FROM pedido GROUP BY idvendedor HAVING SUM(valor) > 1500;
 
 -- 3. O somatório das vendas de cada vendedor.
 SELECT idvendedor, SUM(valor) FROM pedido GROUP BY idvendedor ORDER BY idvendedor;
@@ -14,7 +20,10 @@ SELECT idvendedor, SUM(valor) FROM pedido GROUP BY idvendedor ORDER BY idvendedo
 SELECT COUNT(idmunicipio) FROM municipio;
 
 -- 5. A quantidade de municípios que são do Paraná ou de Santa Catarina.
-SELECT COUNT(idmunicipio) FROM municipio WHERE iduf IN (5,6)
+SELECT COUNT(idmunicipio) FROM municipio WHERE iduf IN (5,6);
+
+-- Resolução do Professor
+SELECT COUNT(idmunicipio) FROM municipio WHERE iduf IN (1,2);
 
 -- 6. A quantidade de municípios por estado.
 SELECT iduf, COUNT(idmunicipio) FROM municipio GROUP BY iduf;
@@ -33,6 +42,9 @@ SELECT idfornecedor, COUNT(idproduto) FROM produto GROUP BY idfornecedor;
 
 -- 11. A média de preços dos produtos do fornecedor Cap. Computadores.
 SELECT idfornecedor, AVG(valor) FROM produto WHERE idfornecedor = 2 GROUP BY idfornecedor;
+
+-- Resolução do professor
+SELECT idfornecedor, AVG(valor) FROM produto WHERE idfornecedor = 1 GROUP BY idfornecedor;
 
 -- 12. O somatório dos preços de todos os produtos.
 SELECT SUM(valor) FROM produto;
@@ -72,6 +84,10 @@ SELECT data_pedido, SUM(valor)
 FROM pedido WHERE data_pedido BETWEEN '2008-04-01' AND '2009-12-10'
 GROUP BY data_pedido  HAVING SUM(valor) > 200;
 
+-- Resolução do professor
+SELECT SUM(valor)
+FROM pedido WHERE data_pedido BETWEEN '2008-04-01' AND '2009-12-10' AND valor > 200;
+
 -- 24. A média do valor do pedido do vendedor André.
 SELECT idvendedor, AVG(valor) FROM pedido WHERE idvendedor = 1 GROUP BY idvendedor;
 
@@ -93,20 +109,37 @@ FROM pedido
 WHERE data_pedido BETWEEN '2008-04-15' AND '2008-04-25'
 GROUP BY data_pedido;
 
+-- Resolução do professor
+SELECT COUNT(idpedido) 
+FROM pedido 
+WHERE data_pedido BETWEEN '2008-04-15' AND '2008-04-25';
+
 -- 30. A quantidade de pedidos que o valor seja maior que R$ 1.000,00.
 SELECT idpedido, SUM(valor) FROM pedido GROUP BY idpedido HAVING SUM(valor) > 1000;
+
+-- Resolução do professor
+SELECT COUNT(idpedido) FROM pedido WHERE valor > 1000;
 
 -- 31. A quantidade de microcomputadores vendida.
 SELECT idproduto, COUNT(idpedido) FROM pedido_produto WHERE idproduto = 1 GROUP BY idproduto;
 
+-- Resolução do professor
+SELECT SUM(quantidade) FROM pedido_produto WHERE idproduto = 1;
+
 -- 32. A quantidade de produtos vendida agrupado por produto.
 SELECT idproduto, COUNT(idpedido) FROM pedido_produto  GROUP BY idproduto;
+
+-- Resolução do professor
+SELECT idproduto, SUM(quantidade) FROM pedido_produto GROUP BY idproduto;
 
 -- 33. O somatório do valor dos produtos dos pedidos, agrupado por pedido.
 SELECT idpedido, SUM(valor_unitario) FROM pedido_produto GROUP BY idpedido;
 
 -- 34. A quantidade de produtos agrupados por pedido.
 SELECT idpedido, COUNT(idproduto) FROM pedido_produto GROUP BY idpedido;
+
+-- Resolução do professor
+SELECT idpedido, SUM(quantidade) FROM pedido_produto GROUP BY idpedido;
 
 -- 35. O somatório do valor total de todos os produtos do pedido.
 SELECT SUM(valor_unitario) FROM pedido_produto;
@@ -126,5 +159,11 @@ SELECT MIN(valor_unitario) FROM pedido_produto;
 -- 39. O somatório da quantidade de produtos por pedido.
 SELECT idpedido, COUNT(idproduto) FROM pedido_produto GROUP BY idpedido;
 
+-- Resolução do professor
+SELECT idpedido, SUM(quantidade) FROM pedido_produto GROUP BY idpedido;
+
 -- 40. O somatório da quantidade de todos os produtos do pedido.
 SELECT COUNT(idproduto) FROM pedido_produto;
+
+-- Resolução do professor
+SELECT SUM(valor_unitario) FROM pedido_produto;
