@@ -46,7 +46,7 @@ FROM
 SELECT * FROM municipio;
 SELECT
     nome,
-    SUBSTRING(nome FROM 5 FOR 10)
+    SUBSTRING(nome FROM 5 FOR 5)
 FROM
     municipio
 
