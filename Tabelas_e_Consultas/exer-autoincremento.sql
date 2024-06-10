@@ -57,10 +57,12 @@ ALTER SEQUENCE fornecedor_id_seq OWNED BY fornecedor.idfornecedor;
 SELECT * FROM municipio;
 
 -- Encontrando o próximo valor da tabela ID
-SELECT MAX(idmunicipio) FROM municipio;
+SELECT MAX(idmunicipio) + 1 FROM municipio;
 
 -- Criando uma sequência
-CREATE SEQUENCE municipio_id_seq MINVALUE 9;
+CREATE SEQUENCE municipio_id_seq MINVALUE 10;
+ALTER SEQUENCE municipio_id_seq RESTART WITH 10;
+
 
 -- Alterando a tabela para usar a sequência
 ALTER TABLE municipio
@@ -74,10 +76,11 @@ ALTER SEQUENCE municipio_id_seq OWNED BY municipio.idmunicipio;
 SELECT * FROM nacionalidade;
 
 -- Encontrando o próximo valor da tabela ID
-SELECT MAX(idnacionalidade) FROM nacionalidade;
+SELECT MAX(idnacionalidade) + 1 FROM nacionalidade;
 
 -- Criando uma sequência
 CREATE SEQUENCE nacionalidade_id_seq MINVALUE 4;
+ALTER SEQUENCE nacionalidade_id_seq RESTART WITH 5;
 
 -- Alterando a tabela para usar a sequência
 ALTER TABLE nacionalidade
@@ -91,10 +94,12 @@ ALTER SEQUENCE nacionalidade_id_seq OWNED BY nacionalidade.idnacionalidade;
 SELECT * FROM pedido;
 
 -- Encontrando o próximo valor da tabela ID
-SELECT MAX(idpedido) FROM pedido;
+SELECT MAX(idpedido) + 1 FROM pedido;
 
 -- Criando uma sequência
 CREATE SEQUENCE pedido_id_seq MINVALUE 15;
+ALTER SEQUENCE pedido_id_seq RESTART WITH 16;
+
 
 -- Alterando a tabela para usar a sequência
 ALTER TABLE pedido
