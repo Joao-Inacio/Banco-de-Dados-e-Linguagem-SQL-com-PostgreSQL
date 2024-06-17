@@ -182,3 +182,75 @@ CREATE TABLE emprestimo (
     CONSTRAINT pk_ept_idemprestimo PRIMARY KEY (idemprestimo),
     CONSTRAINT fk_aln_idaluno FOREIGN KEY (idaluno) REFERENCES aluno (idaluno) ON DELETE CASCADE
 );
+
+-- 15. Insira os dados abaixo na tabela EMPRESTIMO. 
+-- IdAluno | Emprestimo | Devolucao | Valor | Devolvido 
+-- Mario | 02/05/2012 | 12/05/2012 | 10,00 | S 
+-- Mario | 23/04/2012 | 03/05/2012 | 5,00 | N 
+-- João | 10/05/2012 | 20/05/2012 | 12,00 | N 
+-- Paulo | 10/05/2012 | 20/05/2012 | 8,00 | S 
+-- Pedro | 05/05/2012 | 15/05/2012 | 15,00 | N 
+-- Pedro | 07/05/2012 | 17/05/2012 | 20,00 | S 
+-- Pedro | 08/05/2012 | 18/05/2012 | 5,00 | S 
+INSERT INTO emprestimo (idaluno, data_emprestimo, data_devolucao, valor, devolvido) VALUES (1, '2012-05-02', '2012-05-12', 10, 'S'), (1, '2012-04-23', '2012-05-03', 5, 'N'), (2, '2012-05-10', '2012-05-20', 12, 'N'), (3, '2012-05-10', '2012-05-20', 8, 'S'), (4, '2012-05-05', '2012-05-15', 15, 'N'), (4, '2012-05-07', '2012-05-17', 20, 'S'), (4, '2012-05-08', '2012-05-18', 5, 'S');
+
+-- Visualizando a tabela
+SELECT * FROM emprestimo;
+
+-- 16. Crie uma tabela chamada EMPRESTIMO_LIVRO, de acordo com os dados abaixo: 
+-- Campo | Observações 
+-- IdEmprestimo | Inteiro, não nulo, chave estrangeira para a tabela EMPRESTIMO 
+-- IdLivro | Inteiro, não nulo e chave estrangeira para a tabela LIVRO 
+-- Chave primária composta com os campos IdEmprestimo e IdLivro 
+CREATE TABLE emprestimo_livro (
+    idemprestimo INTEGER NOT NULL,
+    idlivro INTEGER NOT NULL,
+    CONSTRAINT pk_idemprestimo_idlivro PRIMARY KEY (idemprestimo, idlivro),
+    CONSTRAINT fk_ept_idemprestimo FOREIGN KEY (idemprestimo) REFERENCES emprestimo (idemprestimo) ON DELETE CASCADE,
+    CONSTRAINT fk_lvr_idlivro FOREIGN KEY (idlivro) REFERENCES livro (idlivro) ON DELETE CASCADE
+);
+
+-- 17. Insira os dados abaixo na tabela EMPRESTIMO_LIVRO. 
+-- IdEmpréstimo | IdLivro 
+-- Primeiro empréstimo do Mário | Banco de Dados – 1 Edição 
+-- Segundo empréstimo do Mário | Programação Orientada a Aspectos em Java 
+-- Segundo empréstimo do Mário | Programação de Computadores em Java 
+-- Empréstimo do João | Oracle DataBase 11G Administração 
+-- Empréstimo do João | PHP para Desenvolvimento Profissional 
+-- Empréstimo do Paulo | HTML5 – Guia Prático 
+-- Primeiro empréstimo do Pedro | Programação Orientada a Aspectos em Java 
+-- Segundo empréstimo do Pedro | XHTML: Guia de Referência para Desenvolvimento na Web 
+-- Segundo empréstimo do Pedro | Bando de Dados – 1 Edição 
+-- Terceiro empréstimo do Pedro | PHP com Programação Orientada a Objetos 
+INSERT INTO emprestimo_livro (idemprestimo, idlivro) VALUES (2, 1), (1, 4), (1, 3), (3, 2), (3, 7), (4, 5), (5, 4), (6, 6), (6, 1), (7, 8);
+
+-- Visualizando a tabela
+SELECT * FROM emprestimo_livro;
+
+-- 18. Crie os seguintes índices: 
+-- Tabela Campo
+-- Emprestimo Emprestimo
+-- Emprestimo Devolução 
+CREATE INDEX idx_ept_emprestimo ON emprestimo (idemprestimo);
+CREATE INDEX idx_ept_devolucao ON emprestimo (devolvido);
+
+-- CONSULTAS SIMPLES 
+
+-- 19. O nome dos autores em ordem alfabética. 
+SELECT nome FROM autor ORDER BY nome;
+
+-- 20. O nome dos alunos que começam com a letra P. 
+SELECT nome FROM aluno WHERE nome LIKE 'P%';
+
+-- 21. O nome dos livros da categoria Banco de Dados ou Java.
+SELECT nome FROM livro WHERE idcategoria IN (1, 3);
+
+-- 22. O nome dos livros da editora Bookman. 
+SELECT nome FROM livro WHERE ideditora = 1;
+
+-- 23. Os empréstimos realizados entre 05/05/2012 e 10/05/2012.
+SELECT * FROM emprestimo WHERE data_emprestimo BETWEEN '2012-05-05' AND '2012-05-10';
+-- 24. Os empréstimos que não foram feitos entre 05/05/2012 e 10/05/2012
+SELECT * FROM emprestimo WHERE data_emprestimo NOT BETWEEN '2012-05-05' AND '2012-05-10';
+-- 25. Os empréstimos que os livros já foram devolvidos.
+SELECT * FROM emprestimo WHERE devolvido = 'S';
