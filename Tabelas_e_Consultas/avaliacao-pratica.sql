@@ -254,3 +254,162 @@ SELECT * FROM emprestimo WHERE data_emprestimo BETWEEN '2012-05-05' AND '2012-05
 SELECT * FROM emprestimo WHERE data_emprestimo NOT BETWEEN '2012-05-05' AND '2012-05-10';
 -- 25. Os empréstimos que os livros já foram devolvidos.
 SELECT * FROM emprestimo WHERE devolvido = 'S';
+
+-- CONSULTAS COM AGRUPAMENTO SIMPLES 
+
+-- 26. A quantidade de livros. 
+SELECT COUNT(idlivro) AS quantidade_de_livros FROM livro;
+
+-- 27. O somatório do valor dos empréstimos. 
+SELECT SUM(valor) AS somatorio_do_valor FROM emprestimo;
+
+-- 28. A média do valor dos empréstimos. 
+SELECT ROUND(AVG(valor)::NUMERIC, 2) AS media_do_valor FROM emprestimo;
+
+-- 29. O maior valor dos empréstimos. 
+SELECT MAX(valor) AS maior_valor FROM emprestimo;
+
+-- 30. O menor valor dos empréstimos.
+SELECT MIN(valor) AS menor_valor FROM emprestimo;
+
+-- 31. O somatório do valor do empréstimo que estão entre 05/05/2012 e 10/05/2012.
+SELECT SUM(valor) AS somatorio_do_valor FROM emprestimo WHERE data_emprestimo BETWEEN '2012-05-05' AND '2012-05-10';
+
+-- 32. A quantidade de empréstimos que estão entre 01/05/2012 e 05/05/2012. 
+SELECT COUNT(valor) AS quantidade_de_emprestimo FROM emprestimo WHERE data_emprestimo BETWEEN '2012-05-01' AND '2012-05-05';
+
+-- CONSULTAS COM JOIN 
+
+-- 33. O nome do livro, a categoria e a editora (LIVRO) – fazer uma view 
+CREATE VIEW livros AS
+SELECT
+    lvr.nome AS nome_do_livro,
+    ctg.nome AS categoria,
+    edt.nome AS editora
+FROM
+    livro AS lvr
+LEFT OUTER JOIN
+    categoria AS ctg ON lvr.idcategoria = ctg.idcategoria
+LEFT OUTER JOIN
+    editora AS edt ON lvr.ideditora = edt.ideditora;
+
+-- Retornando a VIEW
+SELECT * FROM livros;
+
+-- 34. O nome do livro e o nome do autor (LIVRO_AUTOR) – fazer uma view.
+CREATE VIEW livros_autor AS
+SELECT
+    lvr.nome AS nome_do_livro,
+    atr.nome AS nome_do_autor
+FROM
+    livro_autor AS lvat
+LEFT OUTER JOIN
+    livro AS lvr ON lvr.idlivro = lvat.idlivro
+LEFT OUTER JOIN
+    autor AS atr ON atr.idautor = lvat.idautor;
+
+-- Retornando a VIEW
+SELECT * FROM livros_autor;
+
+-- 35. O nome dos livros do autor Ian Graham (LIVRO_AUTOR).
+SELECT
+    lvr.nome AS nome_do_livro,
+    atr.nome AS nome_do_autor
+FROM
+    livro_autor AS lvat
+LEFT OUTER JOIN
+    livro AS lvr ON lvr.idlivro = lvat.idlivro
+LEFT OUTER JOIN
+    autor AS atr ON atr.idautor = lvat.idautor
+WHERE
+    atr.nome = 'Ian Graham';
+
+-- 36. O nome do aluno, a data do empréstimo e a data de devolução (EMPRESTIMO). 
+SELECT
+    aln.nome AS nome_do_aluno,
+    ept.data_emprestimo AS data_do_emprestimo,
+    ept.data_devolucao AS data_de_devolucao
+FROM
+    emprestimo AS ept
+LEFT OUTER JOIN
+    aluno AS aln ON aln.idaluno = ept.idaluno;
+-- 37. O nome de todos os livros que foram emprestados (EMPRESTIMO_LIVRO).
+SELECT
+    lvr.nome AS nome_do_livro
+FROM
+    emprestimo_livro AS emptlvr
+LEFT OUTER JOIN
+    livro AS lvr ON lvr.idlivro = emptlvr.idlivro
+LEFT OUTER JOIN
+    emprestimo AS ept ON ept.idemprestimo = emptlvr.idemprestimo;
+
+-- CONSULTAS COM AGRUPAMENTO + JOIN 
+
+-- 38. O nome da editora e a quantidade de livros de cada editora (LIVRO).
+SELECT
+    edt.nome AS nome_editora,
+    COUNT(lvr.ideditora) AS  quantidade_de_livros
+FROM
+    editora AS edt
+LEFT OUTER JOIN
+    livro AS lvr ON lvr.ideditora = edt.ideditora
+GROUP BY
+    edt.nome;
+
+-- 39. O nome da categoria e a quantidade de livros de cada categoria (LIVRO). 
+SELECT
+    ctg.nome AS nome_da_categoria,
+    COUNT(lvr.idcategoria) AS  quantidade_de_livros
+FROM
+    categoria AS ctg
+LEFT OUTER JOIN
+    livro AS lvr ON lvr.idcategoria = ctg.idcategoria
+GROUP BY
+    ctg.nome;
+-- 40. O nome do autor e a quantidade de livros de cada autor (LIVRO_AUTOR).
+SELECT
+    atr.nome AS nome_do_autor,
+    COUNT(lvr.idlivro) AS quantidade_de_livros
+FROM
+    livro_autor AS lvat
+LEFT OUTER JOIN
+    autor AS atr ON atr.idautor = lvat.idautor
+LEFT OUTER JOIN
+    livro AS lvr ON lvr.idlivro = lvat.idlivro
+GROUP BY
+    atr.nome;
+-- 41. O nome do aluno e a quantidade de empréstimo de cada aluno (EMPRESTIMO_LIVRO). 
+SELECT
+    aln.nome AS nome_do_aluno,
+    COUNT(ept.idemprestimo) AS quantidade_de_emprestimo
+FROM
+    emprestimo_livro AS eptlv
+LEFT OUTER JOIN
+    emprestimo AS ept ON ept.idemprestimo = eptlv.idemprestimo
+LEFT OUTER JOIN
+    aluno AS aln ON aln.idaluno = ept.idaluno
+GROUP BY
+    aln.nome;
+
+-- 42. O nome do aluno e o somatório do valor total dos empréstimos de cada aluno (EMPRESTIMO). 
+SELECT
+    aln.nome AS Nome_do_aluno,
+    SUM(ept.valor) AS somatorio_total
+FROM
+    emprestimo AS ept
+LEFT OUTER JOIN
+    aluno AS aln ON aln.idaluno = ept.idaluno
+GROUP BY
+    aln.nome;
+-- 43. O nome do aluno e o somatório do valor total dos empréstimos de cada aluno somente daqueles que o somatório for maior do que 7,00 (EMPRESTIMO). 
+SELECT
+    aln.nome AS nome_do_aluno,
+    SUM(ept.valor) AS somatorio_total
+FROM
+    emprestimo AS ept
+LEFT OUTER JOIN
+    aluno AS aln ON aln.idaluno = ept.idaluno
+GROUP BY
+    aln.nome
+HAVING
+    SUM(valor) > 7;
