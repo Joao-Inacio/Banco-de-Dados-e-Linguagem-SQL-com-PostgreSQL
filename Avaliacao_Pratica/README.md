@@ -4,7 +4,7 @@
 
 ## Introdução
 
-Esta avaliação prática foi desenvolvida pelo professor Jones Granatyr para testar e consolidar os conhecimentos adquiridos na disciplina de Banco de Dados em cursos presenciais de Ciência da Computação e Sistemas de Informação e no curso de Banco de Dados e Linguagem SQL com PostgreSQL da plataforma Udemy. O exercício abrange desde a criação de um banco de dados e suas tabelas até a inserção e manipulação de dados, garantindo que os conceitos fundamentais de SQL e PostgreSQL sejam compreendidos e aplicados corretamente.
+Esta avaliação prática foi desenvolvida pelo professor [Jones Granatyr](https://www.linkedin.com/in/jones-granatyr-15398397/) para testar e consolidar os conhecimentos adquiridos na disciplina de Banco de Dados em cursos presenciais de Ciência da Computação e Sistemas de Informação e no curso de [Banco de Dados e Linguagem SQL com PostgreSQL](https://www.udemy.com/course/banco-de-dados-sql-postgresql/?couponCode=KEEPLEARNING) da plataforma [Udemy](https://www.udemy.com/). O exercício abrange desde a criação de um banco de dados e suas tabelas até a inserção e manipulação de dados, garantindo que os conceitos fundamentais de SQL e PostgreSQL sejam compreendidos e aplicados corretamente.
 
 ---
 
