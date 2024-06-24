@@ -250,8 +250,10 @@ SELECT nome FROM livro WHERE ideditora = 1;
 
 -- 23. Os empréstimos realizados entre 05/05/2012 e 10/05/2012.
 SELECT * FROM emprestimo WHERE data_emprestimo BETWEEN '2012-05-05' AND '2012-05-10';
+
 -- 24. Os empréstimos que não foram feitos entre 05/05/2012 e 10/05/2012
 SELECT * FROM emprestimo WHERE data_emprestimo NOT BETWEEN '2012-05-05' AND '2012-05-10';
+
 -- 25. Os empréstimos que os livros já foram devolvidos.
 SELECT * FROM emprestimo WHERE devolvido = 'S';
 
@@ -333,6 +335,7 @@ FROM
     emprestimo AS ept
 LEFT OUTER JOIN
     aluno AS aln ON aln.idaluno = ept.idaluno;
+
 -- 37. O nome de todos os livros que foram emprestados (EMPRESTIMO_LIVRO).
 SELECT
     lvr.nome AS nome_do_livro
@@ -366,6 +369,7 @@ LEFT OUTER JOIN
     livro AS lvr ON lvr.idcategoria = ctg.idcategoria
 GROUP BY
     ctg.nome;
+
 -- 40. O nome do autor e a quantidade de livros de cada autor (LIVRO_AUTOR).
 SELECT
     atr.nome AS nome_do_autor,
@@ -378,6 +382,7 @@ LEFT OUTER JOIN
     livro AS lvr ON lvr.idlivro = lvat.idlivro
 GROUP BY
     atr.nome;
+
 -- 41. O nome do aluno e a quantidade de empréstimo de cada aluno (EMPRESTIMO_LIVRO). 
 SELECT
     aln.nome AS nome_do_aluno,
@@ -401,6 +406,7 @@ LEFT OUTER JOIN
     aluno AS aln ON aln.idaluno = ept.idaluno
 GROUP BY
     aln.nome;
+
 -- 43. O nome do aluno e o somatório do valor total dos empréstimos de cada aluno somente daqueles que o somatório for maior do que 7,00 (EMPRESTIMO). 
 SELECT
     aln.nome AS nome_do_aluno,
@@ -441,7 +447,7 @@ SELECT
     CASE 
         WHEN devolvido = 'S' THEN 'Devolução completa'
         ELSE 'Em atraso'
-    END status_devolucao
+    END AS status_devolucao
 FROM
     emprestimo;
 
