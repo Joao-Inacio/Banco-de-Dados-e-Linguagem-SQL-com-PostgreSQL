@@ -413,3 +413,98 @@ GROUP BY
     aln.nome
 HAVING
     SUM(valor) > 7;
+
+-- CONSULTAS COMANDOS DIVERSOS
+
+-- 44. O nome de todos os alunos em ordem decrescente e em letra maiúscula.
+SELECT
+    UPPER(nome)
+FROM
+    aluno
+ORDER BY
+    nome
+DESC;
+
+-- 45. Os empréstimos que foram feitos no mês 04 de 2012.
+SELECT
+    *
+FROM
+    emprestimo
+WHERE 
+    data_emprestimo 
+BETWEEN 
+    '2012-04-01' AND '2012-04-30';
+
+-- 46. Todos os campos do empréstimo. Caso já tenha sido devolvido, mostrar a mensagem “Devolução completa”, senão “Em atraso”.
+SELECT
+    *,
+    CASE 
+        WHEN devolvido = 'S' THEN 'Devolução completa'
+        ELSE 'Em atraso'
+    END status_devolucao
+FROM
+    emprestimo;
+
+-- 47. Somente o caractere 5 até o caractere 10 do nome dos autores.
+SELECT
+    SUBSTRING(nome FROM 5 FOR 10)
+FROM
+    autor;
+
+-- 48. O valor do empréstimo e somente o mês da data de empréstimo. Escreva “Janeiro”, “Fevereiro”, etc
+SELECT
+    valor,
+    CASE
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 1 THEN 'Janeiro'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 2 THEN 'Fevereiro'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 3 THEN 'Março'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 4 THEN 'Abril'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 5 THEN 'Maio'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 6 THEN 'Junho'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 7 THEN 'Julho'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 8 THEN 'Agosto'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 9 THEN 'Setembro'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 10 THEN 'Outubro'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 11 THEN 'Novembro'
+        WHEN EXTRACT(MONTH FROM data_emprestimo) = 12 THEN 'Dezembro'
+        ELSE EXTRACT(MONTH FROM data_emprestimo):: TEXT
+    END AS data_do_emprestimo
+FROM
+    emprestimo;
+
+
+-- SUBCONSULTAS
+
+-- 49. A data do empréstimo e o valor dos empréstimos que o valor seja maior que a média de todos os empréstimos.
+SELECT
+    data_emprestimo,
+    valor
+FROM
+    emprestimo
+WHERE
+    valor > (SELECT AVG(valor) FROM emprestimo);
+
+-- 50. A data do empréstimo e o valor dos empréstimos que possuem mais de um livro.
+SELECT
+    data_emprestimo,
+    valor
+FROM
+    emprestimo AS emp
+WHERE
+        (
+        SELECT
+            COUNT(idlivro)
+        FROM
+            emprestimo_livro AS emplvr
+        WHERE
+            emplvr.idemprestimo = emp.idemprestimo
+    ) > 1;
+
+-- 51. A data do empréstimo e o valor dos empréstimos que o valor seja menor que a soma de todos os empréstimos.
+SELECT
+    data_emprestimo,
+    valor
+FROM
+    emprestimo
+WHERE
+    valor < (SELECT SUM(valor) FROM emprestimo);
