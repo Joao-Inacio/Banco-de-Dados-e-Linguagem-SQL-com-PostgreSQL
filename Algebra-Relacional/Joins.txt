@@ -1,0 +1,11 @@
+-- Joins
+
+π participate.tcode, acode, year, cost (participate ⟕ participate.tcode = tourist.tcode tourist)
+
+π tourist.name, acode, year, cost (participate ⟕ participate.tcode = tourist.tcode tourist)
+
+π turista←tourist.name, acode, ano←year, custo←cost (participate ⟕ participate.tcode = tourist.tcode tourist)
+
+π turista←trt.name, acode, ano←year, custo←cost (ρ ptr participate ⟕ ptr.tcode = trt.tcode ρ trt tourist)
+
+π turista←trt.name, atividade←act.aname, ano←year, custo←cost (ρ ptr participate ⟕ ptr.tcode = trt.tcode ρ trt tourist ⟕ ptr.acode = act.acode ρ act activity)
