@@ -1,0 +1,14 @@
+-- Projetando a tabela hotel
+π hcode, name, city, country (hotel)
+
+-- Projetando a tabela tourist
+π tcode, name, country, age, gender (tourist)
+
+-- Projetando a tabela activity
+π acode, aname, duration_in_minutes (activity)
+
+-- Projetando a tabela stay
+π hcode, tcode, year, days, cost (stay)
+
+-- Projetando a tabela participate
+π tcode, acode, year, cost (participate)
