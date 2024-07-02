@@ -1,0 +1,7 @@
+-- Operação select
+
+σ hcode = 'h1' (hotel)
+
+σ year > 2001 (participate)
+
+σ year > 2001 ∧ year ≤ 2004 (participate)
