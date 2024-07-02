@@ -1,0 +1,7 @@
+-- Agrupamentos
+
+π tcode, cost (participate)
+
+γ tcode ; sum(cost) -> soma (participate)
+
+γ tourist.name ; sum(cost) -> soma (participate ⟕ participate.tcode = tourist.tcode tourist)
